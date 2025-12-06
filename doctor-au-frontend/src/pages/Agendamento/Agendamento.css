@@ -1,0 +1,25 @@
+.agendamento-container {
+  padding: 3rem 1rem;
+  display: flex;
+  justify-content: center;
+}
+.agendamento-card {
+  background: white;
+  padding: 2rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-soft);
+  width: 100%;
+  max-width: 500px;
+}
+.agendamento-card h2 { color: var(--brand-green); margin-bottom: 0.5rem; }
+.input-padrao {
+  width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid #ddd;
+  margin-top: 5px; box-sizing: border-box;
+}
+.btn-agendar {
+  width: 100%; padding: 1rem; background: var(--brand-green); color: white;
+  border: none; border-radius: 8px; font-weight: bold; margin-top: 1.5rem; cursor: pointer;
+}
+.btn-cancelar {
+  display: block; text-align: center; margin-top: 1rem; color: #666; text-decoration: none;
+}

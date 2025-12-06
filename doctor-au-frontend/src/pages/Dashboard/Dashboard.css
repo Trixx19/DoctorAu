@@ -1,0 +1,99 @@
+/* src/pages/Dashboard/Dashboard.css */
+.dashboard-content {
+  padding: 3rem 1rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.dashboard-content h1 {
+  color: var(--text-main);
+  font-size: 2.2rem;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.dashboard-content > p {
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  margin-bottom: 3rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Grid de Serviços */
+.actions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 2rem;
+  margin-bottom: 4rem;
+}
+
+.action-card {
+  background: var(--white);
+  padding: 2.5rem 2rem;
+  border-radius: var(--radius);
+  text-decoration: none;
+  text-align: center;
+  border: 1px solid transparent;
+  box-shadow: var(--shadow-soft);
+  transition: all 0.3s ease;
+}
+
+.action-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--brand-light);
+  box-shadow: 0 10px 25px rgba(44, 165, 119, 0.1);
+}
+
+.action-card h3 {
+  color: var(--brand-green);
+  font-size: 1.4rem;
+  margin: 1rem 0 0.5rem 0;
+}
+
+.action-card p {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* Secções Informativas (estilo blog/info do DogLife) */
+.section-placeholder {
+  background: var(--white);
+  margin: 2rem 0;
+  padding: 3rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-soft);
+}
+
+.section-placeholder h2 {
+  color: var(--brand-green);
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+.icon-dash {
+  background-color: var(--brand-light);
+  color: var(--brand-green);
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem auto;
+  transition: all 0.3s;
+}
+
+.action-card:hover .icon-dash {
+  background-color: var(--brand-green);
+  color: white;
+  transform: scale(1.1);
+}
+
+.dashboard-welcome {
+    text-align: center;
+    margin-bottom: 3rem;
+}

@@ -1,0 +1,74 @@
+/* src/pages/Detalhe/Detalhe.css */
+.detalhe-container {
+  display: flex;
+  justify-content: center;
+  padding: 3rem;
+  background-color: #f9f9f9;
+  min-height: 100vh;
+}
+
+.detalhe-card {
+  background: white;
+  padding: 2.5rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  max-width: 600px;
+  width: 100%;
+}
+
+.detalhe-header {
+  border-bottom: 2px solid #eee;
+  padding-bottom: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.detalhe-header h1 {
+  margin: 0;
+  color: #2c3e50;
+  font-size: 2rem;
+}
+
+.tag-especie {
+  background-color: #e8f6f3;
+  color: #27ae60;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  display: inline-block;
+  margin-top: 0.5rem;
+}
+
+.info-section {
+  margin-bottom: 1.5rem;
+}
+
+.info-section h3 {
+  color: #555;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  border-left: 4px solid #3498db;
+  padding-left: 10px;
+}
+
+.historico-box {
+  background-color: #fff8dc;
+  padding: 1rem;
+  border-left: 4px solid #f1c40f;
+  border-radius: 4px;
+  color: #555;
+  line-height: 1.6;
+}
+
+.btn-voltar {
+  display: inline-block;
+  margin-top: 2rem;
+  color: #7f8c8d;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.2s;
+}
+
+.btn-voltar:hover {
+  color: #2c3e50;
+}

@@ -1,0 +1,94 @@
+/* src/pages/Feed/Feed.css */
+.feed-container {
+  padding: 3rem 1rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.feed-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2.5rem;
+}
+
+.feed-header h1 {
+  font-size: 2rem;
+  color: var(--text-main);
+  font-weight: 800;
+}
+
+.btn-logout {
+  color: var(--danger);
+  font-weight: 700;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.patient-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.3s ease;
+  border: 1px solid #f3f4f6;
+  display: flex;
+  flex-direction: column;
+}
+
+.patient-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Topo do cartão com cor suave */
+.patient-card h3 {
+  background-color: var(--brand-light); /* Verde bem clarinho */
+  color: var(--brand-green);
+  margin: 0;
+  padding: 1.5rem;
+  font-size: 1.3rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.patient-info {
+  padding: 1.5rem;
+  flex-grow: 1;
+}
+
+.patient-info p {
+  margin: 0.8rem 0;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.patient-info p strong {
+  color: var(--text-main);
+}
+
+/* Botão principal */
+.btn-detalhes {
+  display: block;
+  text-align: center;
+  background-color: var(--brand-green);
+  color: white;
+  padding: 1rem;
+  text-decoration: none;
+  font-weight: 700;
+  transition: background 0.3s;
+  margin: 1.5rem;
+  margin-top: 0;
+  border-radius: 12px;
+}
+
+.btn-detalhes:hover {
+  background-color: var(--brand-dark);
+}

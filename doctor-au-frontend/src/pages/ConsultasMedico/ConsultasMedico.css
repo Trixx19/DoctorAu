@@ -1,0 +1,8 @@
+.consultas-container { padding: 3rem 1rem; max-width: 1000px; margin: 0 auto; }
+.tabela-card { background: white; border-radius: var(--radius); box-shadow: var(--shadow-soft); overflow-x: auto; padding: 1rem; }
+.tabela-consultas { width: 100%; border-collapse: collapse; min-width: 600px; }
+.tabela-consultas th { text-align: left; padding: 1rem; border-bottom: 2px solid #eee; color: var(--brand-green); }
+.tabela-consultas td { padding: 1rem; border-bottom: 1px solid #eee; color: var(--text-secondary); }
+.hora-destaque { font-weight: bold; color: var(--brand-dark); }
+.status-badge { background: var(--brand-light); color: var(--brand-dark); padding: 4px 10px; border-radius: 20px; font-size: 0.85rem; font-weight: bold; }
+.btn-voltar-simples { display: inline-block; margin-top: 2rem; color: var(--text-secondary); text-decoration: none; }
