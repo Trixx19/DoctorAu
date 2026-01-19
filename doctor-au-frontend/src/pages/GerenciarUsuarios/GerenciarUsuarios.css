@@ -1,0 +1,144 @@
+/* Container principal */
+.usuarios-container {
+  padding: 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Título */
+.usuarios-container h1 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #064e3b;
+  margin-bottom: 1.5rem;
+}
+
+/* Estado vazio */
+.empty-state {
+  margin-top: 3rem;
+  padding: 2.5rem;
+  border-radius: 16px;
+  background: #f0fdf4;
+  border: 2px dashed #a7f3d0;
+  text-align: center;
+}
+
+.empty-state h2 {
+  color: #047857;
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+}
+
+.empty-state p {
+  color: #065f46;
+  font-size: 0.95rem;
+}
+
+/* Tabela */
+.usuarios-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.06);
+}
+
+/* Cabeçalho */
+.usuarios-table thead {
+  background: #ecfdf5;
+}
+
+.usuarios-table th {
+  padding: 1rem;
+  text-align: left;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #065f46;
+}
+
+/* Linhas */
+.usuarios-table td {
+  padding: 1rem;
+  font-size: 0.9rem;
+  color: #374151;
+  border-top: 1px solid #e5e7eb;
+}
+
+.usuarios-table tbody tr:hover {
+  background-color: #f9fafb;
+}
+
+/* Badges de perfil */
+.badge {
+  padding: 0.3rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+/* ADMIN */
+.badge.admin {
+  background-color: #ede9fe;
+  color: #5b21b6;
+}
+
+/* MEDICO */
+.badge.medico {
+  background-color: #e0f2fe;
+  color: #075985;
+}
+
+/* CLIENTE */
+.badge.cliente {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+/* Ações */
+.acoes {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.acoes button {
+  padding: 0.45rem 0.9rem;
+  font-size: 0.75rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+/* Botões */
+.editar {
+  background-color: #e0f2fe;
+  color: #075985;
+}
+
+.editar:hover {
+  background-color: #bae6fd;
+}
+
+.excluir {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.excluir:hover {
+  background-color: #fecaca;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .usuarios-table {
+    display: block;
+    overflow-x: auto;
+  }
+
+  .usuarios-container h1 {
+    font-size: 1.5rem;
+  }
+}

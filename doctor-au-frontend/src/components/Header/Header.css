@@ -1,25 +1,27 @@
 /* src/components/Header/Header.css */
+
 .main-header {
   background-color: var(--white);
-  padding: 1rem 5%; /* Margem responsiva */
+  padding: 1rem 5%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.03); /* Sombra quase invisível */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
   position: sticky;
   top: 0;
   z-index: 100;
 }
 
+/* LOGO */
 .logo-header {
   color: var(--brand-green);
   font-size: 1.8rem;
   font-weight: 800;
-  display: flex;
-  align-items: center;
   letter-spacing: -0.5px;
+  text-decoration: none;
 }
 
+/* NAV */
 .nav-links {
   display: flex;
   align-items: center;
@@ -30,50 +32,99 @@
   color: var(--text-secondary);
   text-decoration: none;
   font-weight: 600;
-  font-size: 1rem;
-  transition: color 0.2s;
 }
 
 .nav-links a:hover {
   color: var(--brand-green);
 }
 
-/* Botão de Login estilo "Área do Cliente" */
+/* LOGIN */
 .login-link {
-  background-color: var(--white);
-  color: var(--brand-green) !important;
   border: 2px solid var(--brand-green);
   padding: 0.5rem 1.5rem;
-  border-radius: 50px; /* Redondo (Pill shape) */
-  font-weight: 700 !important;
-  transition: all 0.3s ease;
+  border-radius: 50px;
+  font-weight: 700;
+  color: var(--brand-green);
+  transition: all 0.3s;
 }
 
 .login-link:hover {
   background-color: var(--brand-green);
-  color: var(--white) !important;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(44, 165, 119, 0.3);
+  color: white;
 }
 
-.logout-btn-header {
-  background-color: transparent;
-  color: var(--danger); /* Vermelho suave definido no index.css */
-  border: 2px solid var(--danger);
-  padding: 0.5rem 1.5rem;
-  border-radius: 50px;
-  font-weight: 700;
-  font-size: 0.95rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
+/* USUÁRIO LOGADO */
+.user-header {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 1rem;
+}
+
+/* AVATAR — MAIOR E PRONTO PRA FOTO */
+.avatar-header {
+  width: 56px;
+  height: 56px;
+
+  min-width: 56px;
+  min-height: 56px;
+
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--brand-green), #22c55e);
+  color: white;
+
+  font-weight: 800;
+  font-size: 1.1rem;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  line-height: 1; /* 🔴 MUITO IMPORTANTE */
+  text-decoration: none;
+
+  cursor: pointer;
+  user-select: none;
+
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.avatar-header:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 14px rgba(44, 165, 119, 0.35);
+}
+
+.avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+/* SAIR */
+.logout-btn-header {
+  background-color: transparent;
+  color: var(--danger);
+  border: 2px solid var(--danger);
+  padding: 0.4rem 1.2rem;
+  border-radius: 50px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s;
 }
 
 .logout-btn-header:hover {
   background-color: var(--danger);
   color: white;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(239, 68, 68, 0.2);
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .nav-links {
+    gap: 1rem;
+  }
+
+  .avatar-header {
+    width: 48px;
+    height: 48px;
+  }
 }

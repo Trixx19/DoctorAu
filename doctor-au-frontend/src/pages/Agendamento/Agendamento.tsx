@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import Header from '../../components/Header/Header';
 import './Agendamento.css';
 
 const Agendamento = () => {
@@ -18,7 +17,7 @@ const Agendamento = () => {
 
   return (
     <>
-      <Header />
+
       <div className="agendamento-container">
         <div className="agendamento-card">
           <h2>Marcar Consulta 📅</h2>

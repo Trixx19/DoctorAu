@@ -1,54 +1,80 @@
 // src/components/Header/Header.tsx
-import { useEffect, useState } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-import './Header.css';
+import { useEffect, useState } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import "./Header.css";
+
+interface User {
+  nome: string;
+  perfil: "ADMIN" | "MEDICO" | "CLIENTE";
+  foto?: string | null;
+}
 
 const Header = () => {
-  const [isLogged, setIsLogged] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
   const navigate = useNavigate();
-  const location = useLocation(); // Hook para saber em que página estamos
+  const location = useLocation();
 
-  // Sempre que mudamos de rota (location), verificamos se o usuário está logado
   useEffect(() => {
-    const role = localStorage.getItem('userRole');
-    // Se "role" existir (não for null), isLogged vira true
-    setIsLogged(!!role);
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    } else {
+      setUser(null);
+    }
   }, [location]);
 
   const handleLogout = () => {
-    // 1. Limpa os dados do navegador
-    localStorage.removeItem('userRole');
-    localStorage.removeItem('userEmail');
-    
-    // 2. Atualiza o estado local
-    setIsLogged(false);
-    
-    // 3. Redireciona para a Home
-    navigate('/');
+    localStorage.clear();
+    setUser(null);
+    navigate("/");
   };
 
   return (
     <header className="main-header">
-      {/* O Logo clica e leva para a Home (ou Dashboard se logado) */}
-      <Link to={isLogged ? "/dashboard" : "/"} className="logo-header" style={{textDecoration: 'none'}}>
+      {/* LOGO */}
+      <Link to={user ? "/dashboard" : "/"} className="logo-header">
         DoctorAu
       </Link>
-      
+
       <nav className="nav-links">
-        {/* Links comuns */}
-        <Link to={isLogged ? "/dashboard" : "/"}>Início</Link>
-        
-        {/* Só mostra "Sobre" e "Consultas" na Home ou se quiseres sempre */}
-        {!isLogged && <a href="#sobre">Sobre Nós</a>}
-        
-        {/* LÓGICA DO BOTÃO */}
-        {isLogged ? (
-          // SE ESTIVER LOGADO: Mostra Botão Sair
-          <button onClick={handleLogout} className="logout-btn-header">
-            Sair
-          </button>
-        ) : (
-          // SE NÃO ESTIVER LOGADO: Mostra Botão Entrar
+        <Link to={user ? "/dashboard" : "/"}>Início</Link>
+
+        {!user && <a href="#sobre">Sobre Nós</a>}
+
+        {/* USUÁRIO LOGADO */}
+        {user && (
+          <div className="user-header">
+            {/* MENU POR PERFIL */}
+            {user.perfil === "ADMIN" && <Link to="/admin">Admin</Link>}
+            {user.perfil === "MEDICO" && (
+              <Link to="/consultas-medico">Agenda</Link>
+            )}
+            {user.perfil === "CLIENTE" && (
+              <Link to="/minhas-consultas">Minhas Consultas</Link>
+            )}
+
+            {/* AVATAR */}
+            <Link to="/perfil" className="avatar-header">
+              {user.foto ? (
+                <img
+                  src={user.foto}
+                  alt="Avatar"
+                  className="avatar-img"
+                />
+              ) : (
+                user.nome.charAt(0).toUpperCase()
+              )}
+            </Link>
+
+
+            <button onClick={handleLogout} className="logout-btn-header">
+              Sair
+            </button>
+          </div>
+        )}
+
+        {/* USUÁRIO DESLOGADO */}
+        {!user && (
           <Link to="/login" className="login-link">
             Área do Cliente
           </Link>

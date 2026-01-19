@@ -1,99 +1,164 @@
-/* src/pages/Dashboard/Dashboard.css */
-.dashboard-content {
-  padding: 3rem 1rem;
-  max-width: 1100px;
+/* ==============================
+   CONTAINER GERAL
+================================ */
+.dashboard-container {
+  max-width: 1200px;
   margin: 0 auto;
+  padding: 2rem 1.5rem;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.dashboard-content h1 {
-  color: var(--text-main);
-  font-size: 2.2rem;
-  text-align: center;
-  margin-bottom: 0.5rem;
+/* ==============================
+   HEADER DO DASHBOARD
+================================ */
+.dashboard-welcome {
+  margin-bottom: 1.5rem;
 }
 
-.dashboard-content > p {
-  text-align: center;
-  color: var(--text-secondary);
-  font-size: 1.1rem;
-  margin-bottom: 3rem;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
+.dashboard-welcome h1 {
+  font-size: 1.9rem;
+  color: #1f2937;
 }
 
-/* Grid de Serviços */
-.actions-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 2rem;
-  margin-bottom: 4rem;
+.dashboard-welcome p {
+  color: #6b7280;
 }
 
-.action-card {
-  background: var(--white);
-  padding: 2.5rem 2rem;
-  border-radius: var(--radius);
-  text-decoration: none;
-  text-align: center;
-  border: 1px solid transparent;
-  box-shadow: var(--shadow-soft);
-  transition: all 0.3s ease;
+/* ==============================
+   CARD DO USUÁRIO
+================================ */
+.user-card {
+  margin: 1.5rem 0 2.5rem;
+  padding: 1.4rem 1.6rem;
+  background: linear-gradient(135deg, #ecfdf5, #ffffff);
+  border: 1px solid #d1fae5;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
 }
 
-.action-card:hover {
-  transform: translateY(-5px);
-  border-color: var(--brand-light);
-  box-shadow: 0 10px 25px rgba(44, 165, 119, 0.1);
+/* Lado esquerdo do user card */
+.user-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
-.action-card h3 {
-  color: var(--brand-green);
-  font-size: 1.4rem;
-  margin: 1rem 0 0.5rem 0;
-}
-
-.action-card p {
-  color: var(--text-secondary);
-  font-size: 0.95rem;
-  line-height: 1.5;
-}
-
-/* Secções Informativas (estilo blog/info do DogLife) */
-.section-placeholder {
-  background: var(--white);
-  margin: 2rem 0;
-  padding: 3rem;
-  border-radius: var(--radius);
-  box-shadow: var(--shadow-soft);
-}
-
-.section-placeholder h2 {
-  color: var(--brand-green);
-  font-size: 1.8rem;
-  margin-bottom: 1rem;
-}
-
-.icon-dash {
-  background-color: var(--brand-light);
-  color: var(--brand-green);
-  width: 80px;
-  height: 80px;
+/* Avatar com inicial */
+.avatar {
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
+  background-color: #10b981;
+  color: white;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto 1.5rem auto;
-  transition: all 0.3s;
+  font-weight: bold;
+  font-size: 1.2rem;
 }
 
-.action-card:hover .icon-dash {
-  background-color: var(--brand-green);
-  color: white;
-  transform: scale(1.1);
+/* Textos do usuário */
+.user-text {
+  display: flex;
+  flex-direction: column;
 }
 
-.dashboard-welcome {
-    text-align: center;
-    margin-bottom: 3rem;
+.welcome {
+  font-size: 0.8rem;
+  color: #6b7280;
+}
+
+.user-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #064e3b;
+}
+
+/* Badge de perfil */
+.user-role {
+  padding: 0.35rem 1rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+/* Perfil CLIENTE */
+.user-role.cliente {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+/* Perfil MEDICO */
+.user-role.medico {
+  background-color: #e0f2fe;
+  color: #075985;
+}
+
+/* ==============================
+   GRID DE AÇÕES
+================================ */
+.dashboard-actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+/* ==============================
+   CARD DE AÇÃO
+================================ */
+.action-card {
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 1.6rem;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* Hover do card */
+.action-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 35px rgba(0, 0, 0, 0.08);
+}
+
+/* Ícone do card */
+.icon-dash {
+  margin-bottom: 1rem;
+  color: #10b981;
+}
+
+/* Título do card */
+.action-card h3 {
+  font-size: 1.15rem;
+  margin-bottom: 0.4rem;
+  color: #065f46;
+}
+
+/* Texto do card */
+.action-card p {
+  font-size: 0.95rem;
+  color: #374151;
+  line-height: 1.4;
+}
+
+/* ==============================
+   RESPONSIVIDADE
+================================ */
+@media (max-width: 480px) {
+  .dashboard-container {
+    padding: 1.2rem 1rem;
+  }
+
+  .user-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
 }
