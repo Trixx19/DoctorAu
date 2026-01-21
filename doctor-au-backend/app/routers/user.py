@@ -4,7 +4,7 @@ from app.database import get_db
 from app.models import user as user_model
 from app.schemas import user as user_schema
 from app.security.password import hash_password
-from app.security.email import enviar_email_verificacao
+from app.security.token import gerar_token_email
 import uuid
 
 router = APIRouter(prefix="/users", tags=["Usuários"])
@@ -21,7 +21,7 @@ async def criar_usuario(
     if usuario_existente:
         raise HTTPException(status_code=400, detail="Email já cadastrado")
 
-    token = str(uuid.uuid4())
+    token = gerar_token_email(novo_usuario.id)
 
     novo_usuario = user_model.User(
         nome=user.nome,

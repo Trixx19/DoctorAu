@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, String, Enum, Boolean
+from sqlalchemy.orm import relationship
 from app.database import Base
 import enum
 
@@ -18,3 +19,6 @@ class User(Base):
 
     email_verificado = Column(Boolean, default=False)
     email_token = Column(String, nullable=True)
+
+    pets = relationship("Pet", back_populates="dono")
+    agendamentos_vet = relationship("Agendamento", back_populates="veterinario")
