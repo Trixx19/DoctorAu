@@ -1,10 +1,11 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from typing import List
+
 from app.database import get_db
-from app.models.business import Pet
-from app.schemas.business import PetCreate, PetResponse
+from app.models.pet import Pet  # <--- Corrigido (antes era app.models.business)
 from app.models.user import User
+from app.schemas.pet import PetCreate, PetResponse
 from app.dependencies import obter_usuario_logado
 
 router = APIRouter(prefix="/pets", tags=["Pets"])
@@ -15,6 +16,7 @@ def criar_pet(
     db: Session = Depends(get_db), 
     current_user: User = Depends(obter_usuario_logado)
 ):
+    # O user.id vem do token, garantindo segurança
     novo_pet = Pet(**pet.dict(), dono_id=current_user.id)
     db.add(novo_pet)
     db.commit()
@@ -26,6 +28,7 @@ def listar_meus_pets(
     db: Session = Depends(get_db), 
     current_user: User = Depends(obter_usuario_logado)
 ):
+    # Filtra apenas os pets do usuário logado
     return db.query(Pet).filter(Pet.dono_id == current_user.id).all()
 
 @router.delete("/{pet_id}", status_code=204)
@@ -34,10 +37,13 @@ def deletar_pet(
     db: Session = Depends(get_db),
     current_user: User = Depends(obter_usuario_logado)
 ):
-    pet = db.query(Pet).filter(Pet.id == pet_id, Pet.dono_id == current_user.id).first()
+    pet = db.query(Pet).filter(Pet.id == pet_id).first()
+    
     if not pet:
         raise HTTPException(status_code=404, detail="Pet não encontrado")
     
+    if pet.dono_id != current_user.id:
+        raise HTTPException(status_code=403, detail="Você não tem permissão para deletar este pet")
+
     db.delete(pet)
     db.commit()
-    return None
