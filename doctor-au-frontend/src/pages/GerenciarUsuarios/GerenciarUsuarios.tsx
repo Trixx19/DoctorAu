@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import api from "../../services/api"; 
 import "./GerenciarUsuarios.css";
 
 interface Usuario {
@@ -20,22 +21,10 @@ const GerenciarUsuarios = () => {
   async function carregarUsuarios() {
     try {
       setLoading(true);
-
-      const token = localStorage.getItem("token");
-
-      const response = await fetch("http://localhost:8000/users", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error("Erro ao buscar usuários");
-      }
-
-      const data = await response.json();
-      setUsuarios(data);
+      const response = await api.get<Usuario[]>("/users/");
+      setUsuarios(response.data);
     } catch (err) {
+      console.error(err);
       setError("Não foi possível carregar os usuários.");
     } finally {
       setLoading(false);
@@ -49,34 +38,22 @@ const GerenciarUsuarios = () => {
     if (!confirmacao) return;
 
     try {
-      const token = localStorage.getItem("token");
-
-      const response = await fetch(
-        `http://localhost:8000/users/${id}`,
-        {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("Erro ao excluir usuário");
-      }
-
+      await api.delete(`/users/${id}`);
+      
       setUsuarios((prev) => prev.filter((u) => u.id !== id));
-    } catch {
-      alert("Erro ao excluir usuário.");
+      alert("Usuário removido com sucesso!");
+    } catch (err) {
+      console.error(err);
+      alert("Erro ao excluir usuário. Verifique se você tem permissão.");
     }
   }
 
   if (loading) {
-    return <p style={{ padding: "2rem" }}>Carregando usuários...</p>;
+    return <p style={{ padding: "2rem", textAlign: "center" }}>Carregando usuários...</p>;
   }
 
   if (error) {
-    return <p style={{ padding: "2rem", color: "red" }}>{error}</p>;
+    return <p style={{ padding: "2rem", color: "red", textAlign: "center" }}>{error}</p>;
   }
 
   return (
@@ -93,38 +70,44 @@ const GerenciarUsuarios = () => {
             </p>
         </div>
       ) : (
-        <table className="usuarios-table">
-          <thead>
-            <tr>
-              <th>Nome</th>
-              <th>E-mail</th>
-              <th>Perfil</th>
-              <th>Ações</th>
-            </tr>
-          </thead>
-          <tbody>
-            {usuarios.map((user) => (
-              <tr key={user.id}>
-                <td>{user.nome}</td>
-                <td>{user.email}</td>
-                <td>
-                  <span className={`badge ${user.perfil.toLowerCase()}`}>
-                    {user.perfil}
-                  </span>
-                </td>
-                <td className="acoes">
-                  <button className="editar">Editar</button>
-                  <button
-                    className="excluir"
-                    onClick={() => removerUsuario(user.id)}
-                  >
-                    Excluir
-                  </button>
-                </td>
+        <div className="table-responsive">
+          <table className="usuarios-table">
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>E-mail</th>
+                <th>Perfil</th>
+                <th>Ações</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {usuarios.map((user) => (
+                <tr key={user.id}>
+                  <td>{user.nome}</td>
+                  <td>{user.email}</td>
+                  <td>
+                    <span className={`badge ${user.perfil.toLowerCase()}`}>
+                      {user.perfil}
+                    </span>
+                  </td>
+                  <td className="acoes">
+                    {}
+                    <button className="editar" onClick={() => alert(`Editar usuário: ${user.nome}`)}>
+                      Editar
+                    </button>
+                    
+                    <button
+                      className="excluir"
+                      onClick={() => removerUsuario(user.id)}
+                    >
+                      Excluir
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );

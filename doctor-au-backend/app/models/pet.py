@@ -15,5 +15,7 @@ class Pet(Base):
     # Relacionamentos
     dono_id = Column(Integer, ForeignKey("users.id"))
     dono = relationship("User", back_populates="pets")
+    tutor = Column(String, nullable=True)
+    foto = Column(String, nullable=True)
     
     agendamentos = relationship("Agendamento", back_populates="pet")

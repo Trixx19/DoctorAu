@@ -1,7 +1,7 @@
-export type UserRole = "CLIENTE" | "MEDICO" | "ADMIN";
-
 export interface User {
+  id: number;
   nome: string;
   email: string;
-  perfil: UserRole;
+  perfil: "ADMIN" | "MEDICO" | "CLIENTE";
+  email_verificado?: boolean;
 }

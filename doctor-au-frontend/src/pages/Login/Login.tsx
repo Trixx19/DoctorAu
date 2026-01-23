@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { login } from "../../services/authService";
 import "./Login.css";
 
 const Login = () => {
@@ -15,21 +16,14 @@ const Login = () => {
       setError("Todos os campos são obrigatórios.");
       return false;
     }
-
     if (!email.includes("@")) {
       setError("E-mail inválido.");
       return false;
     }
-
-    if (password.length < 6) {
-      setError("A senha deve ter no mínimo 6 caracteres.");
-      return false;
-    }
-
     return true;
   }
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setError("");
 
@@ -37,40 +31,29 @@ const Login = () => {
 
     setLoading(true);
 
-    // Simulação de login (mock)
-    setTimeout(() => {
-      const perfil =
-      email.includes("admin")
-        ? "ADMIN"
-        : email.includes("medico")
-        ? "MEDICO"
-        : "CLIENTE";
+    try {
+      const usuario = await login(email, password);
 
-    const userMock = {
-      nome:
-        perfil === "ADMIN"
-          ? "Administrador"
-          : perfil === "MEDICO"
-          ? "Dr(a). Usuário"
-          : "Usuário",
-      email,
-      perfil,
-    };
+      localStorage.setItem("usuario_logado", JSON.stringify(usuario));
 
-
-      // 🔑 ESSENCIAL PARA PRIVATE ROUTE
-      localStorage.setItem("token", "fake-jwt-token");
-      localStorage.setItem("user", JSON.stringify(userMock));
-
+        navigate("/dashboard");
+      
+      
+    } catch (err) {
+      console.error(err);
+      setError("E-mail ou senha incorretos.");
+    } finally {
       setLoading(false);
-      navigate("/dashboard");
-    }, 1000);
+    }
   }
 
   return (
     <div className="login-container">
       <form className="login-card" onSubmit={handleSubmit}>
-        <h2>Login</h2>
+        {}
+        {/* <img src="/src/assets/img/homedoctor.png" alt="Logo" className="login-logo" style={{maxWidth: '150px', margin: '0 auto 1rem', display: 'block'}} /> */}
+        
+        <h2>Bem-vindo de volta!</h2>
 
         {error && <p className="error-message">{error}</p>}
 
@@ -81,6 +64,7 @@ const Login = () => {
             placeholder="seu@email.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            disabled={loading}
           />
         </div>
 
@@ -91,16 +75,18 @@ const Login = () => {
             placeholder="Digite sua senha"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            disabled={loading}
           />
         </div>
 
         <button type="submit" disabled={loading}>
           {loading ? "Entrando..." : "Entrar"}
         </button>
-
-        <p className="register-link">
-          Não tem conta? <a href="/cadastro">Cadastre-se</a>
-        </p>
+        
+        {}
+        <div style={{marginTop: '1rem', textAlign: 'center', fontSize: '0.9rem'}}>
+           Ainda não tem conta? <a href="/cadastro" style={{color: 'var(--brand-green)', fontWeight: 'bold'}}>Cadastre-se</a>
+        </div>
       </form>
     </div>
   );

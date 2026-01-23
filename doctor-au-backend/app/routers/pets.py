@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from typing import List
 
 from app.database import get_db
-from app.models.pet import Pet  # <--- Corrigido (antes era app.models.business)
+from app.models.pet import Pet  
 from app.models.user import User
 from app.schemas.pet import PetCreate, PetResponse
 from app.dependencies import obter_usuario_logado
@@ -16,7 +16,6 @@ def criar_pet(
     db: Session = Depends(get_db), 
     current_user: User = Depends(obter_usuario_logado)
 ):
-    # O user.id vem do token, garantindo segurança
     novo_pet = Pet(**pet.dict(), dono_id=current_user.id)
     db.add(novo_pet)
     db.commit()
@@ -28,7 +27,6 @@ def listar_meus_pets(
     db: Session = Depends(get_db), 
     current_user: User = Depends(obter_usuario_logado)
 ):
-    # Filtra apenas os pets do usuário logado
     return db.query(Pet).filter(Pet.dono_id == current_user.id).all()
 
 @router.delete("/{pet_id}", status_code=204)

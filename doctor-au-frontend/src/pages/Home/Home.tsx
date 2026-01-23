@@ -24,7 +24,7 @@ const Home = () => {
           </div>
           
           <div className="hero-image">
-            {/* CORREÇÃO 2: Usamos a variável importada aqui entre chaves {} */}
+            {}
             <img 
               src={heroImg} 
               alt="Veterinário examinando um cão" 

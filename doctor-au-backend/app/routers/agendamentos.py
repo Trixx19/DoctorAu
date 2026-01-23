@@ -19,7 +19,7 @@ def criar_agendamento(
     db: Session = Depends(get_db), 
     current_user: User = Depends(obter_usuario_logado)
 ):
-    # 1. Validar Pet
+    
     pet = db.query(Pet).filter(Pet.id == agendamento.pet_id).first()
     if not pet:
         raise HTTPException(status_code=404, detail="Pet não encontrado")
@@ -29,12 +29,10 @@ def criar_agendamento(
         if pet.dono_id != current_user.id:
             raise HTTPException(status_code=403, detail="Este pet não pertence a você")
 
-    # 2. Validar Serviço
     servico = db.query(Servico).filter(Servico.id == agendamento.servico_id).first()
     if not servico:
         raise HTTPException(status_code=404, detail="Serviço não encontrado")
 
-    # 3. Criar
     novo_agendamento = Agendamento(
         data_hora=agendamento.data_hora,
         observacoes=agendamento.observacoes,
@@ -54,14 +52,12 @@ def listar_agendamentos(
     db: Session = Depends(get_db),
     current_user: User = Depends(obter_usuario_logado)
 ):
-    # Admin/Vet vê tudo
     if current_user.perfil in [PerfilEnum.ADMIN, PerfilEnum.MEDICO]:
         return db.query(Agendamento).all()
     
-    # Cliente vê apenas agendamentos dos SEUS pets
     return db.query(Agendamento).join(Pet).filter(Pet.dono_id == current_user.id).all()
 
-# --- NOVA ROTA: Cancelar Agendamento ---
+# ---  Cancelar Agendamento ---
 @router.patch("/{agendamento_id}/cancelar", response_model=AgendamentoResponse)
 def cancelar_agendamento(
     agendamento_id: int,
@@ -73,7 +69,6 @@ def cancelar_agendamento(
     if not agendamento:
         raise HTTPException(status_code=404, detail="Agendamento não encontrado")
 
-    # Permissão: Dono do Pet OU Admin/Vet pode cancelar
     if current_user.perfil not in [PerfilEnum.ADMIN, PerfilEnum.MEDICO]:
         if agendamento.pet.dono_id != current_user.id:
             raise HTTPException(status_code=403, detail="Permissão negada")

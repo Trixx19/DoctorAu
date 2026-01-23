@@ -7,6 +7,9 @@ class PetBase(BaseModel):
     raca: Optional[str] = None
     idade: Optional[int] = None
     peso: Optional[float] = None
+    
+    tutor: Optional[str] = None
+    foto: Optional[str] = None
 
 class PetCreate(PetBase):
     pass

@@ -46,7 +46,6 @@
   margin-bottom: 2rem;
 }
 
-/* Inputs com Ícones dentro */
 .input-icon {
   position: relative;
   display: flex;
@@ -63,7 +62,6 @@
   padding-left: 40px !important; 
 }
 
-/* Reutilizando estilos de formulário para consistência */
 .form-group {
   margin-bottom: 1.2rem;
 }

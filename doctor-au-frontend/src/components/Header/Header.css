@@ -53,14 +53,11 @@
   color: white;
 }
 
-/* USUÁRIO LOGADO */
 .user-header {
   display: flex;
   align-items: center;
   gap: 1rem;
 }
-
-/* AVATAR — MAIOR E PRONTO PRA FOTO */
 .avatar-header {
   width: 56px;
   height: 56px;
@@ -79,7 +76,7 @@
   align-items: center;
   justify-content: center;
 
-  line-height: 1; /* 🔴 MUITO IMPORTANTE */
+  line-height: 1; 
   text-decoration: none;
 
   cursor: pointer;

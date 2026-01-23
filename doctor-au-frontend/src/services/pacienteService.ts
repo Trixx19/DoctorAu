@@ -1,19 +1,26 @@
-interface Paciente {
+import api from './api';
+
+export interface Pet {
   id: number;
   nome: string;
   especie: string;
   idade: number;
+  tutor?: string;
 }
 
-const pacientesMock: Paciente[] = [
-  { id: 1, nome: "Rex", especie: "Cachorro", idade: 4 },
-  { id: 2, nome: "Mimi", especie: "Gato", idade: 2 },
-];
+// Busca todos os pets (o backend deve filtrar os seus)
+export async function getPacientes(): Promise<Pet[]> {
+  try {
+    const response = await api.get<Pet[]>('/pets/');
+    return response.data;
+  } catch (error) {
+    console.error("Erro ao buscar pacientes:", error);
+    throw error;
+  }
+}
 
-export function getPacientes(): Promise<Paciente[]> {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(pacientesMock);
-    }, 800);
-  });
+// Busca um pet específico pelo ID
+export async function getPacienteById(id: number): Promise<Pet> {
+  const response = await api.get<Pet>(`/pets/${id}`);
+  return response.data;
 }

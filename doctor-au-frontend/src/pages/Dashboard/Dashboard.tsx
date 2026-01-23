@@ -5,7 +5,6 @@ import {
   FolderOpen,
   PlusCircle,
   Dog,
-  MessageCircle,
   History,
   Shield,
   Users,
@@ -13,115 +12,117 @@ import {
 import "./Dashboard.css";
 
 interface User {
+  id: number;
   nome: string;
   email: string;
-  perfil: "CLIENTE" | "MEDICO" | "ADMIN";
+  perfil: "ADMIN" | "MEDICO" | "CLIENTE";
 }
 
 const Dashboard = () => {
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
+    const storedUser = localStorage.getItem("usuario_logado");
+    
     if (storedUser) {
-      setUser(JSON.parse(storedUser));
+      try {
+        setUser(JSON.parse(storedUser));
+      } catch (error) {
+        console.error("Erro ao ler dados do usuário", error);
+      }
     }
   }, []);
 
   if (!user) {
-    return <p>Carregando dashboard...</p>;
+    return (
+      <div className="dashboard-container">
+        <p style={{textAlign: "center", color: "#666"}}>Carregando suas informações...</p>
+      </div>
+    );
   }
 
   return (
-    <div className="dashboard-container">
-      {/* Card do usuário */}
-      <div className="user-card">
-        <div className="user-left">
-          <div className="avatar">
-            {user.nome.charAt(0).toUpperCase()}
+    <>
+
+      
+      <div className="dashboard-container">
+        
+        {/* CARD DO USUÁRIO */}
+        <div className="user-card">
+          <div className="user-left">
+            <div className="avatar">
+              {}
+              {user.nome.charAt(0).toUpperCase()}
+            </div>
+
+            <div className="user-text">
+              <span className="welcome">Bem-vindo(a),</span>
+              <span className="user-name">{user.nome}</span>
+            </div>
           </div>
 
-          <div className="user-text">
-            <span className="welcome">Bem-vindo(a)</span>
-            <span className="user-name">{user.nome}</span>
-          </div>
+          {}
+          <span className={`user-role ${user.perfil.toLowerCase()}`}>
+            {user.perfil === "ADMIN" && "Administrador"}
+            {user.perfil === "MEDICO" && "Veterinário"}
+            {user.perfil === "CLIENTE" && "Tutor"}
+          </span>
         </div>
 
-        <span className={`user-role ${user.perfil.toLowerCase()}`}>
-          {user.perfil}
-        </span>
-      </div>
+        {}
+        <div className="dashboard-actions">
 
-      {/* Ações do Dashboard */}
-      <div className="dashboard-actions">
-        {/* CLIENTE */}
-        {user.perfil === "CLIENTE" && (
-          <>
-            <Link to="/meus-pets" className="action-card">
-              <div className="icon-dash">
-                <Dog size={36} />
-              </div>
-              <h3>Meus Pets</h3>
-              <p>Gerencie os perfis dos seus animais.</p>
-            </Link>
+          {/* === PERFIL CLIENTE === */}
+          {user.perfil === "CLIENTE" && (
+            <>
+              <Link to="/meus-pets" className="action-card">
+                <div className="icon-dash">
+                  <Dog size={36} />
+                </div>
+                <h3>Meus Pets</h3>
+                <p>Ver carteira de vacinação.</p>
+              </Link>
 
-            <Link to="/agendar" className="action-card">
-              <div className="icon-dash">
-                <CalendarDays size={36} />
-              </div>
-              <h3>Agendar Consulta</h3>
-              <p>Marque nova consulta ou vacina.</p>
-            </Link>
+              <Link to="/agendar" className="action-card">
+                <div className="icon-dash">
+                  <PlusCircle size={36} />
+                </div>
+                <h3>Agendar Consulta</h3>
+                <p>Marque um horário pro seu pet.</p>
+              </Link>
 
-            <div className="action-card">
-              <div className="icon-dash">
-                <History size={36} />
-              </div>
-              <h3>Minhas Consultas</h3>
-              <p>Histórico de consultas e exames.</p>
-            </div>
+              <Link to="/minhas-consultas" className="action-card">
+                <div className="icon-dash">
+                  <History size={36} />
+                </div>
+                <h3>Histórico</h3>
+                <p>Veja suas consultas passadas.</p>
+              </Link>
+            </>
+          )}
 
-            <div className="action-card">
-              <div className="icon-dash">
-                <MessageCircle size={36} />
-              </div>
-              <h3>Chat</h3>
-              <p>Fale com a recepção.</p>
-            </div>
-          </>
-        )}
+          {/* === PERFIL MÉDICO  === */}
+          {user.perfil === "MEDICO" && (
+            <>
+              <Link to="/pacientes" className="action-card">
+                <div className="icon-dash">
+                  <FolderOpen size={36} />
+                </div>
+                <h3>Pacientes</h3>
+                <p>Acessar prontuários e fichas.</p>
+              </Link>
 
-        {/* MÉDICO */}
-        {user.perfil === "MEDICO" && (
-          <>
-            <Link to="/feed" className="action-card">
-              <div className="icon-dash">
-                <FolderOpen size={36} />
-              </div>
-              <h3>Pacientes</h3>
-              <p>Acessar prontuários.</p>
-            </Link>
+              <Link to="/consultas-medico" className="action-card">
+                <div className="icon-dash">
+                  <CalendarDays size={36} />
+                </div>
+                <h3>Minha Agenda</h3>
+                <p>Próximas consultas marcadas.</p>
+              </Link>
+            </>
+          )}
 
-            <Link to="/consultas-medico" className="action-card">
-              <div className="icon-dash">
-                <CalendarDays size={36} />
-              </div>
-              <h3>Agenda</h3>
-              <p>Consultas do mês.</p>
-            </Link>
-
-            <Link to="/novo-cadastro" className="action-card">
-              <div className="icon-dash">
-                <PlusCircle size={36} />
-              </div>
-              <h3>Novo Cadastro</h3>
-              <p>Adicionar novo paciente.</p>
-            </Link>
-
-          </>
-        )}
-
-        {/* ADMIN */}
+          {/* === PERFIL ADMIN === */}
           {user.perfil === "ADMIN" && (
             <>
               <Link to="/admin/usuarios" className="action-card">
@@ -129,20 +130,21 @@ const Dashboard = () => {
                   <Users size={36} />
                 </div>
                 <h3>Gerenciar Usuários</h3>
-                <p>Clientes, médicos e administradores.</p>
+                <p>Controle de acesso total.</p>
               </Link>
 
               <Link to="/admin" className="action-card">
                 <div className="icon-dash">
                   <Shield size={36} />
                 </div>
-                <h3>Painel Administrativo</h3>
-                <p>Configurações do sistema.</p>
+                <h3>Painel Admin</h3>
+                <p>Métricas e configurações.</p>
               </Link>
             </>
           )}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

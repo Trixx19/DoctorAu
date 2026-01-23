@@ -10,10 +10,8 @@ router = APIRouter(tags=["Autenticação"])
 
 @router.post("/token")
 def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
-    # Busca usuário pelo email (username no form do Swagger)
     user = db.query(User).filter(User.email == form_data.username).first()
     
-    # Verifica se usuário existe e se a senha bate
     if not user or not verify_password(form_data.password, user.senha):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -21,7 +19,11 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depend
             headers={"WWW-Authenticate": "Bearer"},
         )
     
-    # Gera o token usando sua função
-    access_token = criar_token_acesso(subject=user.id)
+    if not user.email_verificado:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Seu email ainda não foi verificado. Verifique sua caixa de entrada."
+        )
     
+    access_token = criar_token_acesso(subject=user.id)
     return {"access_token": access_token, "token_type": "bearer"}

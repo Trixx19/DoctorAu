@@ -1,12 +1,14 @@
-// src/components/Header/Header.tsx
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import { logout } from "../../services/authService"; 
 import "./Header.css";
 
 interface User {
+  id: number;
   nome: string;
+  email: string;
   perfil: "ADMIN" | "MEDICO" | "CLIENTE";
-  foto?: string | null;
+  foto?: string;
 }
 
 const Header = () => {
@@ -15,23 +17,30 @@ const Header = () => {
   const location = useLocation();
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
+    const storedUser = localStorage.getItem("usuario_logado");
     if (storedUser) {
-      setUser(JSON.parse(storedUser));
+      try {
+        setUser(JSON.parse(storedUser));
+      } catch (error) {
+        setUser(null);
+      }
     } else {
       setUser(null);
     }
   }, [location]);
 
   const handleLogout = () => {
-    localStorage.clear();
+    logout(); // Limpa token
+    localStorage.removeItem("usuario_logado"); 
     setUser(null);
-    navigate("/");
+    navigate("/login");
   };
+
+  const inicial = user?.nome ? user.nome.charAt(0).toUpperCase() : "?";
 
   return (
     <header className="main-header">
-      {/* LOGO */}
+      {}
       <Link to={user ? "/dashboard" : "/"} className="logo-header">
         DoctorAu
       </Link>
@@ -39,45 +48,42 @@ const Header = () => {
       <nav className="nav-links">
         <Link to={user ? "/dashboard" : "/"}>Início</Link>
 
-        {!user && <a href="#sobre">Sobre Nós</a>}
+        {}
+        {!user && <Link to="/login" className="login-link">Entrar</Link>}
 
-        {/* USUÁRIO LOGADO */}
+        {}
         {user && (
           <div className="user-header">
-            {/* MENU POR PERFIL */}
-            {user.perfil === "ADMIN" && <Link to="/admin">Admin</Link>}
-            {user.perfil === "MEDICO" && (
-              <Link to="/consultas-medico">Agenda</Link>
+            
+            {}
+            {user.perfil === "ADMIN" && (
+              <Link to="/admin">Painel Admin</Link>
             )}
+            
+            {user.perfil === "MEDICO" && (
+              <Link to="/consultas-medico">Minha Agenda</Link>
+            )}
+            
             {user.perfil === "CLIENTE" && (
-              <Link to="/minhas-consultas">Minhas Consultas</Link>
+              <>
+                <Link to="/meus-pets">Meus Pets</Link>
+                <Link to="/minhas-consultas">Minhas Consultas</Link>
+              </>
             )}
 
-            {/* AVATAR */}
-            <Link to="/perfil" className="avatar-header">
+            {}
+            <Link to="/perfil" className="avatar-header" title="Meu Perfil">
               {user.foto ? (
-                <img
-                  src={user.foto}
-                  alt="Avatar"
-                  className="avatar-img"
-                />
+                <img src={user.foto} alt="Avatar" className="avatar-img" />
               ) : (
-                user.nome.charAt(0).toUpperCase()
+                inicial
               )}
             </Link>
-
 
             <button onClick={handleLogout} className="logout-btn-header">
               Sair
             </button>
           </div>
-        )}
-
-        {/* USUÁRIO DESLOGADO */}
-        {!user && (
-          <Link to="/login" className="login-link">
-            Área do Cliente
-          </Link>
         )}
       </nav>
     </header>

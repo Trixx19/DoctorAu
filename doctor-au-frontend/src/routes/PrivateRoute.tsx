@@ -10,22 +10,36 @@ interface PrivateRouteProps {
 
 const PrivateRoute = ({ children, allowedRoles }: PrivateRouteProps) => {
   const token = localStorage.getItem("token");
-  const user = localStorage.getItem("user");
+  
+ 
+  const userString = localStorage.getItem("usuario_logado");
 
-  // Não está logado
-  if (!token || !user) {
+  // Verificação Se não tem token ou user salvo, vai pro login
+  if (!token || !userString) {
+    // Limpa tudo para garantir que não sobrou lixo
+    localStorage.removeItem("token");
+    localStorage.removeItem("usuario_logado");
     return <Navigate to="/login" replace />;
   }
 
-  // Se não houver restrição de perfil, apenas deixa passar
+  //
+  let user: { perfil: UserRole };
+  
+  try {
+    user = JSON.parse(userString);
+  } catch (error) {
+    console.error("Erro ao ler dados do usuário no PrivateRoute", error);
+    localStorage.clear();
+    return <Navigate to="/login" replace />;
+  }
+
+
   if (!allowedRoles) {
     return <>{children}</>;
   }
 
-  const parsedUser = JSON.parse(user) as { perfil: UserRole };
-
-  // Perfil não autorizado
-  if (!allowedRoles.includes(parsedUser.perfil)) {
+  // Se tiver restrição, verifica se o perfil bate
+  if (!allowedRoles.includes(user.perfil)) {
     return <Navigate to="/dashboard" replace />;
   }
 

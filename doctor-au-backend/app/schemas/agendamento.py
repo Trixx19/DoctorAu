@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 from typing import Optional
 from datetime import datetime
-from app.models.agendamento import StatusAgendamento # Importa do Model para fonte única de verdade
+from app.models.agendamento import StatusAgendamento
 
 class AgendamentoBase(BaseModel):
     data_hora: datetime

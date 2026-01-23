@@ -7,16 +7,10 @@ from app.security.password import hash_password
 from datetime import datetime, timedelta
 import sys
 
-# Importante: Carrega os models para o SQLAlchemy reconhecê-los
 import app.models 
 
-# --- A CORREÇÃO ESTÁ AQUI ---
-# Apaga todas as tabelas existentes para evitar conflitos de colunas antigas
 print("🔥 Resetando o banco de dados (Drop All)...")
 Base.metadata.drop_all(bind=engine)
-# ----------------------------
-
-# Recria as tabelas do zero com a estrutura correta
 print("🏗️ Recriando tabelas...")
 Base.metadata.create_all(bind=engine)
 
@@ -25,10 +19,8 @@ db = SessionLocal()
 def seed():
     print("🌱 Iniciando o Seed...")
 
-    # 2. Criar Usuários
     print("👤 Criando Usuários...")
     
-    # Admin
     admin = User(
         nome="Admin Sistema",
         email="admin@doctorau.com",
@@ -37,7 +29,6 @@ def seed():
         email_verificado=True
     )
     
-    # Veterinário
     vet = User(
         nome="Dr. Dolittle",
         email="vet@doctorau.com",
@@ -46,7 +37,6 @@ def seed():
         email_verificado=True
     )
     
-    # Cliente
     cliente = User(
         nome="Maria Silva",
         email="maria@gmail.com",
@@ -58,11 +48,10 @@ def seed():
     db.add_all([admin, vet, cliente])
     db.commit()
     
-    # Precisamos dos IDs gerados, então fazemos refresh
     db.refresh(vet)
     db.refresh(cliente)
 
-    # 3. Criar Serviços
+    
     print("💉 Criando Serviços...")
     servicos = [
         Servico(nome="Consulta Clínica", descricao="Avaliação geral do pet", preco=150.00),
@@ -73,10 +62,8 @@ def seed():
     db.add_all(servicos)
     db.commit()
     
-    # Recupera o serviço de consulta para usar no agendamento
     consulta = servicos[0] 
 
-    # 4. Criar Pets (do Cliente)
     print("🐶 Criando Pets...")
     pet1 = Pet(
         nome="Rex",
@@ -100,14 +87,13 @@ def seed():
     db.commit()
     db.refresh(pet1)
 
-    # 5. Criar Agendamentos
     print("📅 Criando Agendamentos...")
     agendamento = Agendamento(
         data_hora=datetime.now() + timedelta(days=1, hours=2), # Amanhã
         status=StatusAgendamento.PENDENTE,
         observacoes="Pet está mancando um pouco.",
         pet_id=pet1.id,
-        veterinario_id=vet.id, # Vincula ao veterinário criado
+        veterinario_id=vet.id, 
         servico_id=consulta.id
     )
     

@@ -1,59 +1,209 @@
-.cadastro-container {
-  padding: 1.5rem;
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-.cadastro-container h1 {
-  font-size: 1.6rem;
-  margin-bottom: 1.5rem;
-  color: #064e3b;
-}
-
-.cadastro-form {
-  background: white;
-  padding: 2rem;
-  border-radius: 16px;
-  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.06);
-}
-
-.input-group {
+/* Container ocupa a altura restante da tela (sem contar o header global) */
+.novo-cadastro-container {
+  min-height: calc(100vh - 80px);
   display: flex;
-  flex-direction: column;
-  margin-bottom: 1rem;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); /* Fundo verde suave */
 }
 
-.input-group label {
-  font-size: 0.8rem;
-  color: #374151;
-  margin-bottom: 0.3rem;
-}
-
-.input-group input {
-  padding: 0.6rem 0.8rem;
-  border-radius: 8px;
-  border: 1px solid #d1d5db;
-}
-
-button {
-  margin-top: 0.8rem;
+/* Card Branco Moderno */
+.novo-cadastro-card {
+  background: white;
   width: 100%;
-  padding: 0.7rem;
-  background: #10b981;
+  max-width: 500px;
+  padding: 2.5rem;
+  border-radius: 24px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  position: relative;
+  border: 1px solid #f0fdf4;
+}
+
+/* Botão Voltar (Link discreto) */
+.btn-voltar-topo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #6b7280;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+  transition: color 0.2s;
+}
+
+.btn-voltar-topo:hover {
+  color: #10b981;
+}
+
+/* Títulos */
+.header-form {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.header-form h1 {
+  font-size: 1.8rem;
+  color: #064e3b; /* Verde escuro da marca */
+  margin-bottom: 0.5rem;
+  font-weight: 800;
+}
+
+.header-form p {
+  color: #6b7280;
+  font-size: 0.95rem;
+}
+
+/* Inputs com Ícones */
+.form-group-moderno {
+  margin-bottom: 1.2rem;
+}
+
+.form-group-moderno label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #374151;
+  margin-bottom: 0.4rem;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* Ícone posicionado dentro do input */
+.input-icon-left {
+  position: absolute;
+  left: 14px;
+  color: #9ca3af;
+  pointer-events: none;
+}
+
+.form-group-moderno input {
+  width: 100%;
+  padding: 0.8rem 1rem 0.8rem 2.8rem; /* Espaço na esquerda para o ícone */
+  border-radius: 12px;
+  border: 2px solid #e5e7eb;
+  background-color: #f9fafb;
+  font-size: 1rem;
+  color: #1f2937;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.form-group-moderno input:focus {
+  outline: none;
+  border-color: #10b981; /* Verde DoctorAu */
+  background-color: white;
+  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
+}
+
+/* Botão Salvar */
+.btn-salvar-moderno {
+  width: 100%;
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: #10b981;
   color: white;
   border: none;
-  border-radius: 999px;
-  font-weight: 600;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 700;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: transform 0.2s, background-color 0.2s;
 }
 
-button:hover {
-  background: #059669;
+.btn-salvar-moderno:hover {
+  background-color: #059669;
+  transform: translateY(-2px);
 }
 
-.form-message {
-  margin-top: 1rem;
-  font-size: 0.85rem;
+.btn-salvar-moderno:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Mensagens de Feedback */
+.mensagem-box {
+  margin-top: 1.5rem;
+  padding: 0.8rem;
+  border-radius: 10px;
   text-align: center;
+  font-weight: 600;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.mensagem-box.sucesso {
+  background-color: #dcfce7;
+  color: #166534;
+  border: 1px solid #bbf7d0;
+}
+
+.mensagem-box.erro {
+  background-color: #fee2e2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+}
+
+/* Área de Upload */
+.upload-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.upload-box {
+  width: 120px;
+  height: 120px;
+  border: 2px dashed #10b981;
+  border-radius: 50%; /* Redondo igual perfil */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  overflow: hidden;
+  background-color: #f0fdf4;
+  transition: all 0.3s;
+}
+
+.upload-box:hover {
+  background-color: #d1fae5;
+  transform: scale(1.05);
+}
+
+.upload-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
   color: #065f46;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.img-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+  margin-right: 8px;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
